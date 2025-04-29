@@ -7,10 +7,15 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.get("/")
 def index():
-    file_path = "./static/index.html"
+    file_path = "./static/html/index.html"
     return FileResponse(file_path, media_type="text/html")
 
 @app.get("/weater")
 def weater():
-    file_path = "./static/weather.html"
+    file_path = "./static/html/weather.html"
+    return FileResponse(file_path,media_type="text/html")
+
+@app.get("/radar")
+def radar():
+    file_path = "./static/html/radar.html"
     return FileResponse(file_path,media_type="text/html")
