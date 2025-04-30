@@ -1,4 +1,4 @@
-from .request_api import RequestApi
+from backend.model.request_api import RequestApi
 from datetime import datetime
 
 app = RequestApi()

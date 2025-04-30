@@ -1,7 +1,7 @@
 from fastapi import *
 from model import *
 from fastapi.responses import JSONResponse
-from model.api_response_handler import get_weather_by_location, get_weather_by_city
+from backend.model.api_response_handler import get_weather_by_location, get_weather_by_city
 router = APIRouter(prefix="/api")
 
 

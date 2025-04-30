@@ -3,7 +3,7 @@ from fastapi import *
 from fastapi.responses import FileResponse
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
-from router import weather
+from backend.router import weather
 app = FastAPI()
 
 # app.mount("/static", StaticFiles(directory="/static"), name="static")

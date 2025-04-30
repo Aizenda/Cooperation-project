@@ -8,16 +8,16 @@
 	<link href="https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap" rel="stylesheet">
 	<title>第七組:天氣預報</title>
 	<!-- css -->
-	<link rel="stylesheet" type="text/css" href="../css/map.css">
-	<link rel="stylesheet" type="text/css" href="../css/index.css">
+	<link rel="stylesheet" type="text/css" href="static/css/map.css">
+	<link rel="stylesheet" type="text/css" href="static/css/index.css">
 </head>
 <body>
 	<!-- 網站標頭:jash -->
 	<header>
-		<div class="header__title">Weather Forecast</div>
+		<div class="header__title">WF</div>
 		<div class="titlt__nav">
-			<div>詳細預報 </div>
-			<div>雷達回波</div>
+			<div id="forecast">詳細預報 </div>
+			<div id="radar">雷達回波</div>
 		</div>
 	</header>
 
@@ -232,7 +232,8 @@
 	</footer>
 	<!-- js規則:自己修改自己的js，如同禮拜一周會的開發方式，切記 "不要修改他人檔案"  -->
 	<!-- 如果有餘裕，以MVC架構開發，時間不多，謹慎評估 -->
+	<script src="static/js/header.js"></script>
 	<script>"阿童 天氣小卡渲染，僅顯示溫度、降雨機率，在首頁預設display:none"</script><!-- 第二順位 -->
 	<script>"jsah 地圖&DOM 主要功能:透過DOM監聽控制小卡顯示隱藏"</script><!-- 第三順位 -->
-</body>
+	
 </html>
