@@ -1,4 +1,4 @@
-from request_api import RequestApi
+from .request_api import RequestApi
 from datetime import datetime
 
 app = RequestApi()
@@ -29,7 +29,6 @@ def extract_element_value(element_value,  allowed_element_type):
     參數：
     - element_value：含有單一氣象元素資料的字典（包含 ElementName、Time 區段）
     - allowed_element_type：允許的 ElementName 清單，用來過濾需要的氣象項目
-
     回傳範例：
     extracted = [
             {
@@ -70,7 +69,7 @@ def parse_weather_elements(WeatherElement, allowed_element_type):
     處理整個 WeatherElement 列表，整理出所有需要的項目
     參數：
     - WeatherElement: List，每個元素是 dict，包含氣象元素資訊（ElementName, Time 等）
-    - allowed_element_type：允許的 ElementName 清單，用來過濾需要的氣象項目 
+    - allowed_element_type：允許的 ElementName 清單，用來過濾需要的氣象項目
     """
     results = []
     for element in WeatherElement:
@@ -86,14 +85,13 @@ def parse_weather_elements(WeatherElement, allowed_element_type):
     return results
 
 
-def get_weather_by_loction(city: str, district: str, target_elements: list = ['天氣預報綜合描述']):
+def get_weather_by_location(city: str, district: str, target_elements: list = ['天氣預報綜合描述']):
     """
     獲取行政區天氣資訊
     參數：
     - city(str)：市區
     - district(str)：行政區
-    - target_elements(list): ["最高溫度", "天氣預報綜合描述", "平均相對濕度", "天氣現象", "紫外線指數", "最高體感溫度", "降雨機率", "風向", "平均溫度"... ]
-
+    - target_elements(list): ["天氣預報綜合描述","天氣現象", "紫外線指數", "平均溫度"]
     回傳格式範例：{
         "city": "臺北市",
         "district": "大安區",
@@ -103,10 +101,10 @@ def get_weather_by_loction(city: str, district: str, target_elements: list = ['�
                 "elementValue":[
                     {
                         'date': '2025-04-26',
-                        'period': '白天', 
-                        'value': { 'UVIndex': '7', 'UVExposureLevel': '高量級'}
+                        'period': '白天',
+                        'values': { 'UVIndex': '7', 'UVExposureLevel': '高量級'}
                     },
-                    ...   
+                    ...
                 ]
             },
             ...
@@ -142,6 +140,54 @@ def get_weather_by_loction(city: str, district: str, target_elements: list = ['�
     return []
 
 
+def get_weather_by_city(city: str, target_elements: list = ["紫外線指數"]):
+    """
+    獲取行政區天氣資訊
+    參數：
+    - city(str)：市區
+    - district(str)：行政區
+    - target_elements(list): ["天氣預報綜合描述", "平均相對濕度", "天氣現象", "紫外線指數"]
+    回傳格式範例：{
+        "city": "臺北市",
+        "weather": [
+            {
+                "elementType":'紫外線指數',
+                "elementValue":[
+                    {
+                        'date': '2025-04-26',
+                        'period': '白天',
+                        'values': { 'UVIndex': '7', 'UVExposureLevel': '高量級'}
+                    },
+                    ...
+                ]
+            },
+            ...
+        ]
+    }
+    """
+    response = app.getWeatherByCity("全縣市", 0, params={"LocationName": city})
+    if not response.get("status"):
+        print("無法取得資料，請重新嘗試")
+        return
+    data = response.get("data")
+    locations = data["records"]["Locations"]
+    if not locations:
+        return []
+    location_list = locations[0].get("Location", [])
+    for loc in location_list:
+        location_name = loc.get("LocationName")
+        weather_element = loc.get("WeatherElement", [])
+        weather_data = parse_weather_elements(weather_element, target_elements)
+        return {
+            "city": location_name,
+            "weather": weather_data
+        }
+    print(f"找不到{city}的天氣資訊")
+    return []
+
+
 # if __name__ == "__main__":
-#     result = get_weather_by_loction("臺北市", "大安區", ["平均溫度", "天氣預報綜合描述"])
-#     print(result)
+    #     result = get_weather_by_location("臺北市", "大安區", ["平均溫度", "天氣預報綜合描述"])
+    #     print(result)
+    # result = get_weather_by_city("高雄市")
+    # print(result)
