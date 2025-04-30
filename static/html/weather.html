@@ -4,9 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/weather.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="static/css/map.css">
+	  <link rel="stylesheet" type="text/css" href="static/css/index.css">
     <title>weather</title>
   </head>
   <body>
+    <header>
+      <div class="header__title">RickRadar</div>
+      <div class="titlt__nav">
+        <div id="forecast">詳細預報 </div>
+        <div id="radar">雷達回波</div>
+      </div>
+    </header>
     <!-- 小卡完整渲染 & fecth資料 -->
     <!-- 小卡渲染可以把固定框架寫好，地區、降雨...等詳細資訊透過DOM動態渲染 -->
     <main>
@@ -293,5 +303,6 @@
         </div>
       </div>
     </main>
+    <script src="/static/js/header.js"></script>
   </body>
 </html>

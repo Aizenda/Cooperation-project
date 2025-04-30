@@ -6,25 +6,20 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css2?family=Playwrite+RO:wght@100..400&display=swap" rel="stylesheet">
-	<title>第七組:天氣預報</title>
-	<!-- css -->
 	<link rel="stylesheet" type="text/css" href="static/css/map.css">
 	<link rel="stylesheet" type="text/css" href="static/css/index.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/index_right_section.css" />
+	<iocn></iocn>
+	<title>瑞克快報</title>
 </head>
 <body>
-	<!-- 網站標頭:jash -->
 	<header>
-		<div class="header__title">WF</div>
+		<div class="header__title">RickRadar</div>
 		<div class="titlt__nav">
 			<div id="forecast">詳細預報 </div>
 			<div id="radar">雷達回波</div>
 		</div>
 	</header>
-
-	<!-- 地圖:jash -->
-	<!-- 天氣卡:阿童 -->
-	<!-- 排版:grid -->
-
 	<main class="main__container__grid">
 		<div>
 			<svg
@@ -224,7 +219,93 @@
 			</svg>
 		</div>
 		<div>
-			<!-- 阿童 -->
+			<div class="card">
+				<div class="current-weather">
+					<div class="details">
+						<p>Now</p>
+						<h2>34.04 &deg;C</h2>
+						<p>多雲</p>
+					</div>
+					<div class="weather-icon">
+						<img
+							src="/static/img/cloudy.png"
+							alt="cloudy"
+							style="height: 100px"
+						/>
+					</div>
+				</div>
+				<hr />
+				<div class="card-footer">
+					<p><i class="fa-solid fa-calendar"></i> 星期三 30 April 2025</p>
+					<p><i class="fa-solid fa-location-dot"></i>台灣 台北市 信義區</p>
+				</div>
+			</div>
+			<!-- 一週預報區域 -->
+			<div class="card">
+				<h2>7 days Forecast</h2>
+				<div class="day-forecast">
+					<div class="forecast-item">
+						<div class="icon-wrapper">
+							<img
+								src="/static/img/cloudy.png"
+								alt="cloudy"
+								style="height: 30px"
+							/>
+							<span> 29.42 &deg;C</span>
+						</div>
+						<p>1 May</p>
+						<p>星期四</p>
+					</div>
+					<div class="forecast-item">
+						<div class="icon-wrapper">
+							<img
+								src="/static/img/rainy.png"
+								alt="cloudy"
+								style="height: 30px"
+							/>
+							<span> 28.26 &deg;C</span>
+						</div>
+						<p>2 May</p>
+						<p>星期五</p>
+					</div>
+					<div class="forecast-item">
+						<div class="icon-wrapper">
+							<img
+								src="/static/img/thunder.png"
+								alt="cloudy"
+								style="height: 30px"
+							/>
+							<span> 32.18 &deg;C</span>
+						</div>
+						<p>3 May</p>
+						<p>星期六</p>
+					</div>
+					<div class="forecast-item">
+						<div class="icon-wrapper">
+							<img
+								src="/static/img/sun.png"
+								alt="cloudy"
+								style="height: 30px"
+							/>
+							<span> 30.42 &deg;C</span>
+						</div>
+						<p>4 May</p>
+						<p>星期日</p>
+					</div>
+					<div class="forecast-item">
+						<div class="icon-wrapper">
+							<img
+								src="/static/img/cloud.png"
+								alt="cloudy"
+								style="height: 30px"
+							/>
+							<span> 29.42 &deg;C</span>
+						</div>
+						<p>5 May</p>
+						<p>星期一</p>
+					</div>
+				</div>
+			</div>
 		</div>
 	</main>
 	<footer>

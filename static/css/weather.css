@@ -1,18 +1,27 @@
 /* * {
   border: 1px solid red;
 } */
-html {
+/* html {
   display: flex;
   justify-content: center;
   align-items: flex-start;
   margin: 100px auto auto auto;
-}
+} */
 main {
   max-width: 1200px;
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: flex-start;
+}
+
+header{
+	display: flex;
+	width: 1200px;
+	margin: auto;
+	justify-content: space-between;
+	margin-top: 0;
+	align-items: center;
 }
 
 /* left section */

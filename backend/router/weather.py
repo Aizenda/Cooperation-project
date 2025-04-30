@@ -1,7 +1,9 @@
 from fastapi import *
-from model import *
+from backend.model.db_connector import mysql_pool
 from fastapi.responses import JSONResponse
 from backend.model.api_response_handler import get_weather_by_location, get_weather_by_city
+from datetime import datetime
+
 router = APIRouter(prefix="/api")
 
 
@@ -30,12 +32,32 @@ def get_radar(request: Request):
     con = None
     cursor = None
 
-    select_query = """
-    SELECT radar_img_url FROM radar_data
-    WHERE radar_time BETWEEN NOW() - INTERVAL 6 HOUR AND NOW();
-    """
+    try:
+        con = mysql_pool.get_connection() 
+        cursor = con.cursor(dictionary=True)
+        select_query = """
+        SELECT radar_time,radar_img_url FROM radar_data
+        WHERE radar_time BETWEEN NOW() - INTERVAL 6 HOUR AND NOW();
+        """
 
-    cursor.execute(select_query)
-    result = cursor.fetchall()
+        cursor.execute(select_query)
+        result = cursor.fetchall()
 
-    return JSONResponse({"ok": True, "radars": result})
+        # 轉換 datetime 物件為字串
+        for row in result:
+            if isinstance(row['radar_time'], datetime):
+                row['radar_time'] = row['radar_time'].strftime('%Y-%m-%d %H:%M:%S')
+
+        return JSONResponse({"ok": True, "radars": result})
+
+    except Exception as e:
+        print(f"[錯誤] radar 查詢失敗: {e}")
+        return JSONResponse(status_code=500, content={"ok": False, "message": "伺服器內部錯誤"})
+
+    finally:
+        if cursor:
+            cursor.close()
+        if con:
+            con.close()
+
+    
