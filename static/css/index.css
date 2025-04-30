@@ -1,37 +1,37 @@
-body{
-	margin: 0;
-	display: grid;
-	grid-template-rows: 20vh 60vh 20vh;
-	font-size: 16px;
-	font-family: 'Noto Sans TC';
+body {
+  margin: 0;
+  display: grid;
+  grid-template-rows: 20vh 60vh 20vh;
+  font-size: 16px;
+  font-family: "Noto Sans TC";
 }
 
-header{
-	display: flex;
-	width: 1200px;
-	margin: auto;
-	justify-content: space-between;
-	margin-top: 0;
-	align-items: center;
+header {
+  display: flex;
+  width: 1200px;
+  margin: auto;
+  justify-content: space-between;
+  margin-top: 0;
+  align-items: center;
 }
 
-main{
-	width: 1200px;
-	margin: auto;
+main {
+  width: 1200px;
+  margin: auto;
 }
 
-.header__title{
-	font-size: 36px;
-	font-weight: 700;
+.header__title {
+  font-size: 36px;
+  font-weight: 700;
 }
 
-.titlt__nav{
-	display: flex;
-	justify-content: space-between;
-	gap: 30px;
+.titlt__nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
 }
 
-.main__container__grid{
-	display: grid;
-	grid-template-columns: repeat(2,50%);
+.main__container__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
 }
