@@ -76,7 +76,3 @@ def get_all_webhook_data():
             cursor.close()
         if con:
             con.close()
-# update_webhook_data(
-#     "12345666", city="新北市", notify_time="14:30")
-# create_webhook_data(
-#     "123", "https://discord.com/api/webhooks/1367367049554427945/D5LNhkFnNFMviYh5kbFHl37R7kH8jwI364nnLH5rdajq7knnmg1x76xh0s-oXP6hsVi2", "桃園市", "13:10")
