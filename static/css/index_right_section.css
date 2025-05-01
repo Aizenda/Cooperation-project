@@ -1,49 +1,305 @@
 .card {
-    background-color: #f0f0f0;
-    padding: 15px;
-    border-radius: 15px;
-    margin-bottom: 15px;
-    font-size: 14px;
-    color: #999;
-  }
-  
-  .card h2 {
-    font-size: 32px;
-    font-weight: 500;
-  }
-  
-  .weather-data {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 12px;
-  }
-  .weather-left {
-    grid-column: span 1;
-  }
-  .current-weather {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  .current-weather h2 {
-    margin: 7px 0;
-  }
-  .current-weather h2 p {
-    color: #fff;
-  }
-  
-  .card-footer p {
-    font-size: 14px;
-    margin-bottom: 12px;
-  }
-  .forecast-item {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    place-items: center;
-    margin-bottom: 15px;
-  }
-  .icon-wrapper {
-    display: flex;
-    align-items: center;
-  }
-  
+  background-color: #f0f0f0;
+  padding: 15px;
+  border-radius: 15px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #999;
+}
+
+.card h2 {
+  font-size: 32px;
+  font-weight: 500;
+  margin: 0;
+}
+
+.weather-data {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+.weather-left {
+  grid-column: span 1;
+}
+.current-weather {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.current-weather h2 {
+  margin: 7px 0;
+}
+.current-weather h2 p {
+  color: #fff;
+}
+
+.card-footer p {
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+.forecast-item {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  place-items: center;
+  margin-bottom: 15px;
+}
+.icon-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* 主要卡片動畫效果 */
+.card {
+  transition: all 0.45s cubic-bezier(0.25, 1, 0.5, 1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  position: relative;
+  overflow: hidden;
+}
+
+/* 更新狀態動畫 */
+.card.updating {
+  opacity: 0.3;
+  transform: scale(0.96) translateY(8px);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.card.updated {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* 卡片波紋效果 */
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%);
+  opacity: 0;
+  transform: scale(0);
+  transform-origin: center;
+  transition: all 0.5s ease-out;
+  pointer-events: none;
+}
+
+.card.updated::after {
+  opacity: 0.4;
+  transform: scale(2);
+  animation: fadeOut 1.5s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 0.4; }
+  100% { opacity: 0; }
+}
+
+/* 當前天氣卡片特效 */
+.current-weather {
+  transition: all 0.4s ease;
+}
+
+.card.updating .current-weather {
+  filter: blur(2px);
+}
+
+.card.updated .current-weather {
+  filter: blur(0);
+  animation: colorPulse 0.4s forwards;
+}
+
+@keyframes colorPulse {
+  0% { background-color: rgba(240, 240, 240, 0.1); }
+  50% { background-color: rgba(240, 240, 240, 0.2); }
+  100% { background-color: transparent; }
+}
+
+/* 預報項目動畫 */
+.forecast-item {
+  transition: all 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+}
+
+.forecast-item.updating {
+  opacity: 0;
+  transform: translateY(15px) scale(0.95);
+}
+
+.forecast-item.updated {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* 錯開預報項目動畫時間 */
+.forecast-item:nth-child(1) { transition-delay: 0.05s; }
+.forecast-item:nth-child(2) { transition-delay: 0.1s; }
+.forecast-item:nth-child(3) { transition-delay: 0.15s; }
+.forecast-item:nth-child(4) { transition-delay: 0.2s; }
+.forecast-item:nth-child(5) { transition-delay: 0.25s; }
+
+/* 預報項目懸停效果 */
+.forecast-item:hover {
+  transform: translateY(-8px) scale(1.03);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+/* 天氣圖標動畫 */
+.weather-icon img, [id^="forecast-icon-"] {
+  transition: all 0.4s ease;
+  transform-origin: center;
+}
+
+.card.updating .weather-icon img {
+  opacity: 0;
+  transform: scale(0.8) rotate(-10deg);
+}
+
+.card.updated .weather-icon img {
+  opacity: 1;
+  transform: scale(1) rotate(0);
+  animation: bounceIn 0.6s forwards;
+}
+
+@keyframes bounceIn {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* 溫度文字動畫 */
+#current-temp, [id^="forecast-temp-"] {
+  transition: all 0.5s ease;
+  position: relative;
+}
+
+.card.updating #current-temp {
+  opacity: 0;
+  transform: translateX(-15px);
+}
+
+.card.updated #current-temp {
+  opacity: 1;
+  transform: translateX(0);
+  animation: slideTemp 0.5s forwards;
+}
+
+@keyframes slideTemp {
+  0% { transform: translateX(-15px); }
+  60% { transform: translateX(5px); }
+  100% { transform: translateX(0); }
+}
+
+/* 地圖區域懸停效果 */
+svg path {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  stroke-width: 1px;
+  stroke: #fff;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.1));
+}
+
+svg path:hover {
+  fill: #3498db !important;
+  stroke-width: 2px;
+  stroke: #fff;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+  transform: translateY(-2px);
+}
+
+/* 當選中某個城市時的效果 */
+svg path.active {
+  fill: #2980b9 !important;
+  stroke-width: 2px;
+  stroke: #fff;
+  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.3));
+}
+
+/* 內容加載指示器 */
+.loading-indicator {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-top-color: #3498db;
+  border-radius: 50%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+.card.updating .loading-indicator {
+  opacity: 1;
+  visibility: visible;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* 文字內容動畫 */
+#current-period, #current-description, #current-date, #current-location,
+[id^="forecast-date-"], [id^="forecast-weekday-"] {
+  transition: all 0.4s ease;
+  position: relative;
+}
+
+.card.updating #current-period,
+.card.updating #current-description,
+.card.updating #current-date,
+.card.updating #current-location {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.card.updated #current-period,
+.card.updated #current-description,
+.card.updated #current-date,
+.card.updated #current-location {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 為不同元素設置不同的延遲時間 */
+.card.updated #current-period { transition-delay: 0.1s; }
+.card.updated #current-description { transition-delay: 0.2s; }
+.card.updated #current-date { transition-delay: 0.3s; }
+.card.updated #current-location { transition-delay: 0.4s; }
+
+/* 數據變換時的閃光效果 */
+.data-update {
+  position: relative;
+  overflow: hidden;
+}
+
+.data-update::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.4) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.data-update.animate::before {
+  left: 100%;
+  transition: left 1s ease;
+}
