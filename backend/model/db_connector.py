@@ -4,9 +4,11 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 class DatabaseConnectionError(Exception):
     def __init__(self, message):
         super().__init__(message)
+
 
 class MySQLPool:
     def __init__(self):
@@ -35,6 +37,7 @@ class MySQLPool:
             return conn
         except Error as err:
             raise DatabaseConnectionError(f"資料庫連線錯誤: {err}")
+
 
 # 初始化 MySQL 連線池
 mysql_pool = MySQLPool()

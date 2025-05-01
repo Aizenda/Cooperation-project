@@ -33,7 +33,7 @@ def get_radar(request: Request):
     cursor = None
 
     try:
-        con = mysql_pool.get_connection() 
+        con = mysql_pool.get_connection()
         cursor = con.cursor(dictionary=True)
         select_query = """
         SELECT radar_time,radar_img_url FROM radar_data
@@ -46,7 +46,8 @@ def get_radar(request: Request):
         # 轉換 datetime 物件為字串
         for row in result:
             if isinstance(row['radar_time'], datetime):
-                row['radar_time'] = row['radar_time'].strftime('%Y-%m-%d %H:%M:%S')
+                row['radar_time'] = row['radar_time'].strftime(
+                    '%Y-%m-%d %H:%M:%S')
 
         return JSONResponse({"ok": True, "radars": result})
 
@@ -60,4 +61,7 @@ def get_radar(request: Request):
         if con:
             con.close()
 
-    
+
+@router.post("/register")
+def save_webhook():
+    pass

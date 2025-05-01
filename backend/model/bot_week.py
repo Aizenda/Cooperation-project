@@ -4,7 +4,6 @@ from dotenv import load_dotenv
 from datetime import datetime
 from .api_response_handler import get_weather_by_location
 load_dotenv()
-BOT_URL = os.getenv("BOT_URL")
 
 
 class Discord_bot():
@@ -21,14 +20,14 @@ class Discord_bot():
     def __init__(self):
         self.post_list = []
         self.current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        self.url = BOT_URL
+        self.url = os.getenv("BOT_URL")
 
-    def get_value(self, dict_value):
+    def __get_value(self, dict_value):
         data = "\n".join(f"{key}: {value}" for key,
                          value in dict_value.items())
         return data
 
-    def fields_generator(self, element_type, element_value):
+    def __fields_generator(self, element_type, element_value):
         fields = []
         for values in element_value:
             if values.get('period') == "晚上":
@@ -37,7 +36,7 @@ class Discord_bot():
                 "name": "日期", "value": f"{values.get('date')}", "inline": True
             }
             column2 = {
-                "name": element_type, "value": self.get_value(values.get('values')), "inline": True
+                "name": element_type, "value": self.__get_value(values.get('values')), "inline": True
             }
             # 插入空白欄位
             column3 = {
@@ -51,7 +50,7 @@ class Discord_bot():
         # print(fields)
         return fields
 
-    def color_switch(self, element_type):
+    def __color_switch(self, element_type):
         color_map = {
             "天氣預報綜合描述": 65280,
             "平均相對溼度": 16711680,
@@ -63,26 +62,26 @@ class Discord_bot():
         }
         return color_map.get(element_type, 0)
 
-    def build_embed(self, city, district, element_type, fields):
+    def __build_embed(self, city, district, element_type, fields):
         return {
-            "author": {
-                "name": f"一周天氣預報--{element_type}",
-                "url": "https://opendata.cwa.gov.tw/dist/opendata-swagger.html",
-            },
-            "title": f"{city} - {district}",
-            "description": "未來一周天氣，參考就好，不要迷信❌",
-            "color": self.color_switch(element_type),
+            # "author": {
+            #     "name": f"一周天氣預報--{element_type}",
+            #     "url": "https://opendata.cwa.gov.tw/dist/opendata-swagger.html",
+            # },
+            "title": f"一周天氣預報--{element_type}",
+            "url": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvvpIhtHVfu8fRAs5zEENs3Dvng7F0P9J9Gg&s",
+            "description": f"{city} - {district}",
+            "color": self.__color_switch(element_type),
             "fields": fields,
             "footer": {
                 "text": f"資料來源：中央情報局 👨‍💻"
             }
         }
 
-    def data_generator(self, city, district, fields, element_type):
-        embed = self.build_embed(city, district, element_type, fields)
+    def __data_generator(self, city, district, fields, element_type):
+        embed = self.__build_embed(city, district, element_type, fields)
         data = {
             "username": "瑞克雷達",
-            "content": "晚上也要搖",
             "avatar_url": "https://image-cdn.hypb.st/https%3A%2F%2Fhk.hypebeast.com%2Ffiles%2F2021%2F08%2Fnever-gonna-give-you-up-passes-one-billion-views-01.jpg?w=960&cbr=1&q=90&fit=max",
             "embeds": [embed]
         }
@@ -98,7 +97,7 @@ class Discord_bot():
         for weather in weathers:
             element_type = weather.get("elementType")
             element_value = weather.get("elementValue")
-            fields = self.fields_generator(element_type, element_value)
+            fields = self.__fields_generator(element_type, element_value)
             fields.append(
                 {
                     "name": "發布時間",
@@ -106,8 +105,11 @@ class Discord_bot():
                     "inline": False
                 }
             )
-            self.data_generator(city, district, fields, element_type)
+            self.__data_generator(city, district, fields, element_type)
         return self.post_list
+
+    def send_image():
+        pass
 
 
 if __name__ == "__main__":
@@ -118,19 +120,6 @@ if __name__ == "__main__":
         for data in Bot.post_list:
             # response = requests.post(Bot.url, json=data)
             print(data)
-
-# def img_data():
-#     data = {
-#         "content": "Hi",
-#         "embeds": [
-#             {
-#                 "image": {
-#                     "url": "https://static.popdaily.com.tw/u/202409/c30937fd-0e91-4be1-9328-d52cdb472ca3.png"
-#                 }
-#             }
-#         ]
-#     }
-#     return data
 
 
 # response = requests.post(url, json=img_data())
