@@ -186,8 +186,8 @@ def get_weather_by_city(city: str, target_elements: list = ["紫外線指數"]):
     return []
 
 
-# if __name__ == "__main__":
-    #     result = get_weather_by_location("臺北市", "大安區", ["平均溫度", "天氣預報綜合描述"])
-    #     print(result)
-    # result = get_weather_by_city("高雄市")
+if __name__ == "__main__":
+    # result = get_weather_by_location("臺北市", "大安區", ["平均溫度", "天氣預報綜合描述"])
     # print(result)
+    result = get_weather_by_city("高雄市")
+    print(result)
