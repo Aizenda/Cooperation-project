@@ -138,4 +138,10 @@ dmypy.json
 cython_debug/
 
 # macOS
+<<<<<<< HEAD
 .DS_Store
+**/venv
+**/__pycache__
+=======
+.DS_Store
+>>>>>>> 13040c11571b3658dbc20d1d5601588e0ed95a68

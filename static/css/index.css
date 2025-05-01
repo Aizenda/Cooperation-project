@@ -1,7 +1,6 @@
 body{
 	margin: 0;
 	display: grid;
-	grid-template-rows: 20vh 60vh 20vh;
 	font-size: 16px;
 	font-family: 'Noto Sans TC';
 }
@@ -12,6 +11,7 @@ header{
 	margin: auto;
 	justify-content: space-between;
 	margin-top: 0;
+	margin-bottom: 30px;
 	align-items: center;
 }
 
@@ -22,7 +22,12 @@ main{
 
 .header__title{
 	font-size: 36px;
-	font-weight: 700;
+	/* font-weight: 700; */
+	color:#858585;
+}
+
+#forecast,#radar{
+	color:#858585;
 }
 
 .titlt__nav{
@@ -35,3 +40,4 @@ main{
 	display: grid;
 	grid-template-columns: repeat(2,50%);
 }
+

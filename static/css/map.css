@@ -2,17 +2,16 @@
 #svg1216{
 	width: auto;
 	height: 80%; 
-
 }
 
 svg path{
-	fill: #c0ffd9;
-	stroke: #000000;
+	fill: #A3D4F7;
+	stroke: #838383;
 	stroke-width: 2;
 }
 
 svg path:hover{
-	fill: #0f893e;
+	fill: #60A2D7;
 	transition: 0.6s;
 }
 
@@ -20,13 +19,13 @@ svg path:hover{
 #path41{
 	fill: #ffffff;
 	stroke: #ffffff;
-	stroke-width: 10;
 }
 
 
 #path39:hover,
 #path41:hover{
 	fill: #98c9f0;
-	stroke: #000000;
+	stroke: #838383;
+	stroke-width: 4;
 	transition: 0.6s;
 }

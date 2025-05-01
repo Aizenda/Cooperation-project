@@ -50,7 +50,8 @@ class RequestApi:
         '臺中市': ['F-D0047-073', 'F-D0047-075'],
         '臺南市': ['F-D0047-077', 'F-D0047-079'],
         '連江縣': ['F-D0047-081', 'F-D0047-083'],
-        '金門縣': ['F-D0047-085', 'F-D0047-087']
+        '金門縣': ['F-D0047-085', 'F-D0047-087'],
+        '全縣市': ['F-D0047-091'],
     }
 
     def setHeader(self, params={}):
@@ -112,7 +113,7 @@ class RequestApi:
             response["message"] = f"無法預期的錯誤: {err}"
             return response
 
-    def getWeatherByCity(self, city, days=3):
+    def getWeatherByCity(self, city, days=7, params={}):
         """
         取得指定城市的天氣資料
         Args:
@@ -122,7 +123,7 @@ class RequestApi:
         Returns:
             json
         """
-        index = 0 if days == 3 else 1
+        index = 1 if days == 7 else 0
         # 取得縣市與API端點
         api = self.cityApi.get(city)
         if api is None:
@@ -132,4 +133,4 @@ class RequestApi:
             return {"status": False, "message": f"無法取得{city}的{days}天預報API端點"}
         api = api[index]
         # 取得API資料
-        return self.get(api)
+        return self.get(api, params)
