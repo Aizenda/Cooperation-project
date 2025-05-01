@@ -25,6 +25,7 @@ def create_webhook_data(email, webhook_url: str, city: str, notify_time: str):
         con.commit()
         return {"ok": True}
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail="伺服器錯誤，請重新嘗試")
     finally:
         if cursor:
@@ -51,6 +52,7 @@ def update_webhook_data(email, webhook_url: str = None, city: str = None, notify
         con.commit()
         return {"ok": True}
     except Exception as e:
+        print(e)
         raise HTTPException(status_code=500, detail="伺服器錯誤，請重新嘗試")
     finally:
         if cursor:

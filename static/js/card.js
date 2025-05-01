@@ -1,4 +1,4 @@
-const city = localStorage.getItem("city");
+const city = localStorage.getItem("city") || "臺北市";
 
 // 新北市, 基隆市, 台中市, 台南市, 高雄市, 桃園市, 新竹市, 新竹縣, 苗栗縣, 台中縣, 彰化縣, 南投縣, 雲林縣, 嘉義市, 嘉義縣, 屏東縣, 台東縣, 花蓮縣, 宜蘭縣, 澎湖縣, 金門縣, 連江縣";
 const target_element =
