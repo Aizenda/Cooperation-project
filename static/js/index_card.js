@@ -28,7 +28,7 @@ class CardView {
     paths: document.querySelectorAll('svg path'),
     
     // 預報元素 - 使用陣列來存儲五天預報的元素
-    forecastDays: Array.from({length: 7}, (_, i) => ({
+    forecastDays: Array.from({length: 5}, (_, i) => ({
       container: document.getElementById(`forecast-day-${i}`),
       icon: document.getElementById(`forecast-icon-${i}`),
       temp: document.getElementById(`forecast-temp-${i}`),
@@ -61,6 +61,15 @@ class CardView {
           
           onHoverCallback(city);
         }
+      });
+
+      path.addEventListener('click',()=>{
+        const titleTag = path.querySelector('title');
+        if (titleTag && !this.isAnimating) {
+          const city = titleTag.textContent.trim();
+          localStorage.setItem("city",city);
+          window.location.href = '/weater';
+        };
       });
     });
     
@@ -161,6 +170,8 @@ class CardView {
         loader.className = 'loading-indicator';
         card.appendChild(loader);
       }
+
+      
     });
   }
 
