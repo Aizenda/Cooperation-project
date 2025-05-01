@@ -5,8 +5,9 @@ class headerView{
 	element = {
 		title : document.querySelector('.header__title'),
 		Forecast : document.querySelector('#forecast'),
-		Radar : document.querySelector('#radar')
-	}
+		Radar : document.querySelector('#radar'),
+		Notify : document.querySelector('#notify')
+ 	}
 }
 
 class headerController{
@@ -23,6 +24,9 @@ class headerController{
 		})
 		this.view.element.Radar.addEventListener("click",()=>{
 			this.GoHome("/radar");
+		})
+		this.view.element.Notify.addEventListener("click",()=>{
+			this.GoHome("/notify");
 		})
 		
 	};
