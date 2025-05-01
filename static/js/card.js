@@ -158,13 +158,6 @@ fetch(
       container.appendChild(p);
     });
 
-    // === 在這邊加入顯示圖示的邏輯 ===
-    const weatherCard = new WeatherCard();
-    const weatherIconPath = weatherCard.getWeatherIcon(description);
-    console.log("圖片路徑：", weatherIconPath);
-    // 將圖示插入網頁 (你要有一個 <img id="weather-icon"> 的元素)
-    document.getElementById("weather-icon").src = weatherIconPath;
-
     // 風速 & 風向
     const windSpeed = data.weather[9].elementValue[0].values.WindSpeed;
     const windDirec = data.weather[10].elementValue[0].values.WindDirection;
@@ -207,111 +200,110 @@ fetch(
     console.log(uv);
     document.getElementById("uv").textContent = uv;
 
-    class WeatherCard {
-      constructor() {
-        this.weatherIconMap = {
-          晴天: "/static/img/天氣對照表/白天/01.svg",
+    // 圖示分類
 
-          晴時多雲: "/static/img/天氣對照表/白天/02.svg",
+    function getWeatherIcon(weatherDescription) {
+      // 從描述中提取天氣現象（去掉溫度、濕度等其他資訊）
+      const weatherIconMap = {
+        晴天: "/static/img/天氣對照表/白天/01.svg",
 
-          多雲時晴: "/static/img/天氣對照表/白天/03.svg",
+        晴時多雲: "/static/img/天氣對照表/白天/02.svg",
 
-          多雲: "/static/img/天氣對照表/白天/04.svg",
+        多雲時晴: "/static/img/天氣對照表/白天/03.svg",
 
-          多雲時陰: "/static/img/天氣對照表/白天/05.svg",
+        多雲: "/static/img/天氣對照表/白天/04.svg",
 
-          陰時多雲: "/static/img/天氣對照表/白天/06.svg",
+        多雲時陰: "/static/img/天氣對照表/白天/05.svg",
 
-          陰天: "/static/img/天氣對照表/白天/07.svg",
+        陰時多雲: "/static/img/天氣對照表/白天/06.svg",
 
-          多雲陣雨: "/static/img/天氣對照表/白天/08.svg",
-          多雲短暫雨: "/static/img/天氣對照表/白天/08.svg",
-          多雲短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
-          午後短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
-          短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
-          多雲時晴短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
-          多雲時陰短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
-          陰短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+        陰天: "/static/img/天氣對照表/白天/07.svg",
 
-          多雲時晴短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
-          多雲短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
-          陰短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
-          多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
-          陰時多雲短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+        多雲陣雨: "/static/img/天氣對照表/白天/08.svg",
+        多雲短暫雨: "/static/img/天氣對照表/白天/08.svg",
+        多雲短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+        午後短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+        短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+        多雲時晴短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+        多雲時陰短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+        陰短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
 
-          陰短暫雨: "/static/img/天氣對照表/白天/10.svg",
-          陰午後短暫陣雨: "/static/img/天氣對照表/白天/10.svg",
-          多雲時陰有雨: "/static/img/天氣對照表/白天/10.svg",
+        多雲時晴短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+        多雲短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+        陰短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+        多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+        陰時多雲短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
 
-          多雲時陰有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
-          陰時多雲有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
-          陰有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
+        陰短暫雨: "/static/img/天氣對照表/白天/10.svg",
+        陰午後短暫陣雨: "/static/img/天氣對照表/白天/10.svg",
+        多雲時陰有雨: "/static/img/天氣對照表/白天/10.svg",
 
-          陰時多雲有雨: "/static/img/天氣對照表/白天/12.svg",
-          陰有雨: "/static/img/天氣對照表/白天/12.svg",
+        多雲時陰有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
+        陰時多雲有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
+        陰有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
 
-          多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/13.svg",
-          陰短暫雷陣雨: "/static/img/天氣對照表/白天/13.svg",
+        陰時多雲有雨: "/static/img/天氣對照表/白天/12.svg",
+        陰有雨: "/static/img/天氣對照表/白天/12.svg",
 
-          多雲時陰短暫雨: "/static/img/天氣對照表/白天/14.svg",
+        多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/13.svg",
+        陰短暫雷陣雨: "/static/img/天氣對照表/白天/13.svg",
 
-          多雲時陰陣雨: "/static/img/天氣對照表/白天/15.svg",
-          陰陣雨: "/static/img/天氣對照表/白天/15.svg",
+        多雲時陰短暫雨: "/static/img/天氣對照表/白天/14.svg",
 
-          多雲時陰雷陣雨: "/static/img/天氣對照表/白天/16.svg",
-          陰雷陣雨: "/static/img/天氣對照表/白天/16.svg",
+        多雲時陰陣雨: "/static/img/天氣對照表/白天/15.svg",
+        陰陣雨: "/static/img/天氣對照表/白天/15.svg",
 
-          多雲時陰短暫陣雨: "/static/img/天氣對照表/白天/17.svg",
+        多雲時陰雷陣雨: "/static/img/天氣對照表/白天/16.svg",
+        陰雷陣雨: "/static/img/天氣對照表/白天/16.svg",
 
-          多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/18.svg",
+        多雲時陰短暫陣雨: "/static/img/天氣對照表/白天/17.svg",
 
-          多雲時陰有霧: "/static/img/天氣對照表/白天/19.svg",
-          陰有霧: "/static/img/天氣對照表/白天/19.svg",
-        };
-      }
-      // 根據天氣描述選擇合適的圖標
-      getWeatherIcon(weatherDescription) {
-        // 從描述中提取天氣現象（去掉溫度、濕度等其他資訊）
-        const weatherPart = weatherDescription.split("。")[0];
+        多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/18.svg",
 
-        // 檢查是否在映射表中有完全匹配
-        for (const [key, value] of Object.entries(this.weatherIconMap)) {
-          if (weatherPart === key) {
-            return value;
-          }
-        }
+        多雲時陰有霧: "/static/img/天氣對照表/白天/19.svg",
+        陰有霧: "/static/img/天氣對照表/白天/19.svg",
+      };
 
-        // 如果沒有完全匹配，嘗試部分匹配
-        for (const [key, value] of Object.entries(this.weatherIconMap)) {
-          if (weatherPart.includes(key)) {
-            return value;
-          }
-        }
-
-        // 進一步解析天氣現象的詞組來找到最佳匹配
-        let foundDescription = "";
-        let foundIcon = "";
-
-        // 尋找最長匹配的天氣描述
-        for (const [desc, icon] of Object.entries(this.weatherIconMap)) {
-          // 尋找天氣描述是否包含在文本中
-          if (
-            weatherPart.includes(desc) &&
-            desc.length > foundDescription.length
-          ) {
-            foundDescription = desc;
-            foundIcon = icon;
-          }
-        }
-
-        if (foundIcon) {
-          return foundIcon;
-        }
-
-        // 如果還是沒找到，返回默認圖標
-        return "/static/img/天氣對照表/白天/04.svg"; // 使用多雲作為默認
-      }
+      const weatherPart = weatherDescription.split("。")[0];
+      return (
+        weatherIconMap[weatherPart] || "/static/img/天氣對照表/白天/04.svg"
+      );
     }
+
+    // 一週圖示
+    const description1 =
+      data.weather[14].elementValue[2].values.WeatherDescription;
+    const iconSrc1 = getWeatherIcon(description1);
+    document.getElementById("weather-icon1").src = iconSrc1;
+
+    const description2 =
+      data.weather[14].elementValue[4].values.WeatherDescription;
+    const iconSrc2 = getWeatherIcon(description2);
+    document.getElementById("weather-icon2").src = iconSrc2;
+
+    const description3 =
+      data.weather[14].elementValue[6].values.WeatherDescription;
+    const iconSrc3 = getWeatherIcon(description3);
+    document.getElementById("weather-icon3").src = iconSrc3;
+
+    const description4 =
+      data.weather[14].elementValue[8].values.WeatherDescription;
+    const iconSrc4 = getWeatherIcon(description4);
+    document.getElementById("weather-icon4").src = iconSrc4;
+
+    const description5 =
+      data.weather[14].elementValue[10].values.WeatherDescription;
+    const iconSrc5 = getWeatherIcon(description5);
+    document.getElementById("weather-icon5").src = iconSrc5;
+
+    const description6 =
+      data.weather[14].elementValue[12].values.WeatherDescription;
+    const iconSrc6 = getWeatherIcon(description6);
+    document.getElementById("weather-icon6").src = iconSrc6;
+
+    // 當前圖示
+    const iconSrc = getWeatherIcon(description);
+    document.getElementById("weather-icon").src = iconSrc;
   })
   .catch((err) => {
     console.error("發生錯誤：", err);
