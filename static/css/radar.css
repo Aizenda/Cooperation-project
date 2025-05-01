@@ -1,0 +1,231 @@
+/* 添加到你的 static/css/index.css 文件中 */
+
+/* 主要介面容器 */
+.radar-interface-container {
+  display: flex;
+  width: 100%;
+  margin: 0 auto;
+  gap: 20px;
+  max-width: 1200px;
+}
+
+/* 內容區域 */
+.radar-content-area {
+  flex: 1;
+  min-width: 0; /* 確保不會溢出 */
+}
+
+/* 右側選單 */
+.radar-sidebar {
+  width: 220px;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  align-self: flex-start;
+  position: sticky;
+  top: 20px;
+}
+
+/* 右側選單標題 */
+.sidebar-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* 右側選單區塊 */
+.sidebar-block {
+  margin-bottom: 20px;
+}
+
+/* 右側選單標籤 */
+.sidebar-label {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 8px;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* 右側選單選擇器 */
+.sidebar-selector {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background-color: white;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.9rem;
+  color: #333;
+  cursor: pointer;
+}
+
+.sidebar-selector:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+/* 雷達圖容器樣式 */
+.radar-container {
+  position: relative;
+  width: 100%;
+  background-color: #f8f9fa;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* 雷達圖包裝器 */
+.radar-img-wrapper {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+/* 雷達圖標題樣式 */
+.radar-title {
+  margin-bottom: 10px;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+  font-family: 'Noto Sans TC', sans-serif;
+}
+
+/* 雷達圖時間顯示樣式 */
+.radar-time {
+  margin-bottom: 15px;
+  font-size: 1rem;
+  color: #666;
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: rgba(0, 0, 0, 0.03);
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 4px;
+}
+
+/* 雷達圖圖片樣式 - 移除過渡效果 */
+.radar__img {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: block;
+}
+
+/* 加載中指示器 */
+.loading-indicator {
+  padding: 15px;
+  text-align: center;
+  color: #666;
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-radius: 8px;
+  margin: 20px 0;
+}
+
+/* 幀數信息 */
+.frame-info {
+  font-size: 0.9rem;
+  color: #666;
+  font-family: 'Noto Sans TC', sans-serif;
+  background-color: rgba(0, 0, 0, 0.03);
+  padding: 8px;
+  border-radius: 4px;
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+/* 雷達圖控制按鈕區域 */
+.radar-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  gap: 10px;
+}
+
+.radar-controls button {
+  padding: 8px 15px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 0.9rem;
+  flex-grow: 1;
+  max-width: 120px;
+}
+
+.radar-controls button:hover {
+  background-color: #2980b9;
+}
+
+.radar-controls button:disabled {
+  background-color: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* 進度條容器 */
+.progress-container {
+  width: 100%;
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  margin-top: 15px;
+  overflow: hidden;
+}
+
+/* 進度條 */
+.progress-bar {
+  height: 100%;
+  background-color: #3498db;
+  width: 0%;
+  transition: width 0.2s ease;
+}
+
+/* 響應式設計 */
+@media (max-width: 900px) {
+  .radar-interface-container {
+    flex-direction: column;
+  }
+  
+  .radar-sidebar {
+    width: 100%;
+    position: static;
+    order: -1; /* 在小螢幕上將選單移到頂部 */
+    margin-bottom: 15px;
+  }
+  
+  .sidebar-block {
+    margin-bottom: 15px;
+  }
+}
+
+@media (max-width: 576px) {
+  .radar-container {
+    padding: 10px;
+  }
+  
+  .radar-title {
+    font-size: 1.2rem;
+  }
+  
+  .radar-time {
+    font-size: 0.9rem;
+  }
+  
+  .radar-controls {
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .radar-controls button {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 5px;
+  }
+}

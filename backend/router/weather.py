@@ -2,13 +2,15 @@ from fastapi import *
 from backend.model.db_connector import mysql_pool
 from fastapi.responses import JSONResponse
 from backend.model.api_response_handler import get_weather_by_location, get_weather_by_city
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 import requests
+
 
 router = APIRouter(prefix="/api")
 WEATHER_API_URL = "https://opendata.cwa.gov.tw/api/v1/rest/datastore/F-C0032-001"
 API_KEY = os.getenv("WEATHER_API_KEY")
+cache = {}
 
 @router.get("/weather/district")
 def get_weather(city: str, district: str, target_element: str = Query("天氣預報綜合描述")):
@@ -29,86 +31,77 @@ def get_weather_by_County(city: str,  target_element: str = Query("天氣預報�
     weather_data = get_weather_by_city(city, target_element_list)
     return JSONResponse(content=weather_data, status_code=200)
 
-@router.get("/weather/all-cities")
-def get_weather():
-    try:
-        params = {
-            "Authorization": API_KEY,
-            "format": "JSON"
-        }
-        res = requests.get(WEATHER_API_URL, params=params)
-        res.raise_for_status()
-        data = res.json()
-        locations = data["records"]["location"]
-
-        city_weather = {}
-
-        for location in locations:
-            city = location["locationName"]
-            elements = {e["elementName"]: e["time"] for e in location["weatherElement"]}
-
-            current = {
-                "time": elements["Wx"][0]["startTime"],
-                "Wx": elements["Wx"][0]["parameter"]["parameterName"],
-                "PoP": elements["PoP"][0]["parameter"]["parameterName"],
-                "MinT": elements["MinT"][0]["parameter"]["parameterName"],
-                "CI": elements["CI"][0]["parameter"]["parameterName"],
-                "MaxT": elements["MaxT"][0]["parameter"]["parameterName"],
-            }
-
-            forecast = []
-            for i in range(1, len(elements["Wx"])):  # 從 index 1 開始取得之後幾段時間預報
-                forecast.append({
-                    "startTime": elements["Wx"][i]["startTime"],
-                    "endTime": elements["Wx"][i]["endTime"],
-                    "Wx": elements["Wx"][i]["parameter"]["parameterName"],
-                    "PoP": elements["PoP"][i]["parameter"]["parameterName"],
-                    "MinT": elements["MinT"][i]["parameter"]["parameterName"],
-                    "CI": elements["CI"][i]["parameter"]["parameterName"],
-                    "MaxT": elements["MaxT"][i]["parameter"]["parameterName"],
-                })
-
-            city_weather[city] = {
-                "current": current,
-                "forecast": forecast
-            }
-
-        return JSONResponse(content=city_weather, status_code=200)
-    
-    except Exception as e:
-        return JSONResponse(content={"ok": False, "error": str(e)}, status_code=500)
-
 @router.get("/radar")
-def get_radar(request: Request):
+def get_radar(request: Request, hours: int = Query(6, description="要查詢的時間範圍（小時）", ge=1, le=48)):
+    cache_key = f"radar_{hours}"  # 設定根據時間範圍的唯一快取鍵
+
+    # 檢查是否有快取資料
+    if cache_key in cache:
+        cached_data = cache[cache_key]
+        # 檢查快取資料是否過期
+        if datetime.now() - cached_data["timestamp"] < timedelta(minutes=10):  # 設置過期時間為10分鐘
+            return JSONResponse(content=cached_data["data"], status_code=200)
+        else:
+            # 快取過期，清除快取
+            del cache[cache_key]
+    
     con = None
     cursor = None
-
+    
     try:
-        con = mysql_pool.get_connection() 
+        con = mysql_pool.get_connection()
+        
+        # 檢查連接是否有效
+        if not con.is_connected():
+            con.reconnect(attempts=3, delay=0.5)
+        
         cursor = con.cursor(dictionary=True)
+        
+        # 使用傳入的時間範圍參數
         select_query = """
-        SELECT radar_time,radar_img_url FROM radar_data
-        WHERE radar_time BETWEEN NOW() - INTERVAL 6 HOUR AND NOW();
+        SELECT radar_time, radar_img_url FROM radar_data
+        WHERE radar_time BETWEEN NOW() - INTERVAL %s HOUR AND NOW()
+        ORDER BY radar_time ASC;
         """
-
-        cursor.execute(select_query)
+        
+        cursor.execute(select_query, (hours,))
         result = cursor.fetchall()
-
+        
         # 轉換 datetime 物件為字串
         for row in result:
             if isinstance(row['radar_time'], datetime):
                 row['radar_time'] = row['radar_time'].strftime('%Y-%m-%d %H:%M:%S')
 
-        return JSONResponse({"ok": True, "radars": result})
-
+        # 將資料和快取時間儲存到快取
+        cache[cache_key] = {
+            "data": {
+                "ok": True, 
+                "radars": result, 
+                "timeRange": hours,
+                "count": len(result)
+            },
+            "timestamp": datetime.now()  # 標記快取的時間
+        }
+        
+        return JSONResponse(content=cache[cache_key]["data"], status_code=200)
+    
     except Exception as e:
         print(f"[錯誤] radar 查詢失敗: {e}")
-        return JSONResponse(status_code=500, content={"ok": False, "message": "伺服器內部錯誤"})
-
-    finally:
-        if cursor:
-            cursor.close()
-        if con:
-            con.close()
-
+        return JSONResponse(
+            status_code=500, 
+            content={"ok": False, "message": "伺服器內部錯誤"}
+        )
     
+    finally:
+        # 安全地關閉資源
+        try:
+            if cursor:
+                cursor.close()
+        except Exception as cursor_err:
+            print(f"[錯誤] 關閉游標失敗: {cursor_err}")
+            
+        try:
+            if con and con.is_connected():
+                con.close()
+        except Exception as con_err:
+            print(f"[錯誤] 關閉連接失敗: {con_err}")
