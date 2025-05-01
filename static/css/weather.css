@@ -23,14 +23,19 @@ header {
   font-size: 14px;
   color: #999;
 }
-
+#weather-icon {
+  width: 50px;
+  height: auto;
+  max-height: 80px;
+  object-fit: contain;
+}
 .weather-data {
   width: 100%;
   max-width: 1200px;
   margin: auto;
   display: grid;
   grid-template-areas:
-    "current desc uv visi"
+    "current desc uv comfort"
     "weeks rain rain feel"
     "weeks wind high-low high-low";
   grid-template-columns: repeat(4, 1fr);
@@ -90,8 +95,8 @@ h2 {
   grid-area: high-low;
 }
 
-.visibility-area {
-  grid-area: visi;
+.comfort-area {
+  grid-area: comfort;
 }
 .wind-area {
   grid-area: wind;
@@ -145,4 +150,3 @@ h3 {
   justify-content: space-between;
   align-items: center;
 }
-
