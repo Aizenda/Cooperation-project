@@ -22,12 +22,13 @@ main{
 
 .header__title{
 	font-size: 36px;
-	/* font-weight: 700; */
+	cursor: pointer;
 	color:#858585;
 }
 
-#forecast,#radar{
+#forecast,#radar,#notify{
 	color:#858585;
+	cursor: pointer;
 }
 
 .titlt__nav{
