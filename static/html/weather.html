@@ -4,16 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/static/css/weather.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="static/css/map.css">
-	  <link rel="stylesheet" type="text/css" href="static/css/index.css">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" type="text/css" href="static/css/map.css" />
+    <link rel="stylesheet" type="text/css" href="static/css/index.css" />
     <title>weather</title>
   </head>
   <body>
     <header>
       <div class="header__title">RickRadar</div>
       <div class="titlt__nav">
-        <div id="forecast">詳細預報 </div>
+        <div id="forecast">詳細預報</div>
         <div id="radar">雷達回波</div>
       </div>
     </header>
@@ -22,281 +25,310 @@
     <main>
       <div id="weather">
         <div class="weather-data">
-          <!-- left section -->
-          <div class="weather-left">
-            <!-- 阿童 -->
-            <div>
-              <!-- 即時預報區域 -->
-              <h2>Current Weather</h2>
-              <div class="card">
-                <div class="current-weather">
-                  <div class="details">
-                    <h2>34.04 &deg;C</h2>
-                    <p>多雲</p>
-                  </div>
-                  <div class="weather-icon">
-                    <img
-                      src="/static/img/cloudy.png"
-                      alt="cloudy"
-                      style="height: 100px"
-                    />
-                  </div>
-                </div>
-                <hr />
-                <div class="card-footer">
-                  <p>
-                    <i class="fa-solid fa-calendar"></i> 星期三 30 April 2025
-                  </p>
-                  <p>
-                    <i class="fa-solid fa-location-dot"></i>台灣 台北市 信義區
-                  </p>
-                </div>
+          <!-- 即時預報區域 -->
+          <!-- <h2>當前天氣概況</h2> -->
+          <div class="card current-area">
+            <div class="current-weather">
+              <div class="details">
+                <h2 id="temperature">34.04 &deg;C</h2>
+                <p id="weatherSign">多雲</p>
               </div>
-              <!-- 一週預報區域 -->
-              <h2>一週天氣預報</h2>
-              <div class="card">
-                <div class="day-forecast">
-                  <div class="forecast-item">
-                    <div class="icon-wrapper">
-                      <img
-                        src="/static/img/cloudy.png"
-                        alt="cloudy"
-                        style="height: 30px"
-                      />
-                      <span> 29.42 &deg;C</span>
-                    </div>
-                    <p>1 May</p>
-                    <p>星期四</p>
-                  </div>
-                  <div class="forecast-item">
-                    <div class="icon-wrapper">
-                      <img
-                        src="/static/img/rainy.png"
-                        alt="cloudy"
-                        style="height: 30px"
-                      />
-                      <span> 28.26 &deg;C</span>
-                    </div>
-                    <p>2 May</p>
-                    <p>星期五</p>
-                  </div>
-                  <div class="forecast-item">
-                    <div class="icon-wrapper">
-                      <img
-                        src="/static/img/thunder.png"
-                        alt="cloudy"
-                        style="height: 30px"
-                      />
-                      <span> 32.18 &deg;C</span>
-                    </div>
-                    <p>3 May</p>
-                    <p>星期六</p>
-                  </div>
-                  <div class="forecast-item">
-                    <div class="icon-wrapper">
-                      <img
-                        src="/static/img/sun.png"
-                        alt="cloudy"
-                        style="height: 30px"
-                      />
-                      <span> 30.42 &deg;C</span>
-                    </div>
-                    <p>4 May</p>
-                    <p>星期日</p>
-                  </div>
-                  <div class="forecast-item">
-                    <div class="icon-wrapper">
-                      <img
-                        src="/static/img/cloud.png"
-                        alt="cloudy"
-                        style="height: 30px"
-                      />
-                      <span> 29.42 &deg;C</span>
-                    </div>
-                    <p>5 May</p>
-                    <p>星期一</p>
-                  </div>
+              <div class="weather-icon">
+                <img
+                  src="/static/img/cloudy.png"
+                  alt="cloudy"
+                  style="height: 100px"
+                />
+              </div>
+            </div>
+            <hr />
+            <div class="card-footer">
+              <p id="date"><span id="period"></span></p>
+              <p id="location"></p>
+            </div>
+          </div>
+          <!-- 一週預報區域 -->
+          <!-- <h2>一週天氣預報</h2> -->
+          <div class="card weeks-area">
+            <div class="day-forecast">
+              <div class="forecast-item">
+                <div class="icon-wrapper">
+                  <img
+                    src="/static/img/cloudy.png"
+                    alt="cloudy"
+                    style="height: 30px"
+                  />
+                  <span id="temperature1"> 29.42 &deg;C</span>
                 </div>
+                <p id="date1">1 May</p>
+                <p id="week1">星期四</p>
+              </div>
+              <div class="forecast-item">
+                <div class="icon-wrapper">
+                  <img
+                    src="/static/img/rainy.png"
+                    alt="cloudy"
+                    style="height: 30px"
+                  />
+                  <span id="temperature2"> 28.26 &deg;C</span>
+                </div>
+                <p id="date2">1 May</p>
+                <p id="week2">星期四</p>
+              </div>
+              <div class="forecast-item">
+                <div class="icon-wrapper">
+                  <img
+                    src="/static/img/thunder.png"
+                    alt="cloudy"
+                    style="height: 30px"
+                  />
+                  <span id="temperature3"> 32.18 &deg;C</span>
+                </div>
+                <p id="date3">1 May</p>
+                <p id="week3">星期四</p>
+              </div>
+              <div class="forecast-item">
+                <div class="icon-wrapper">
+                  <img
+                    src="/static/img/sun.png"
+                    alt="cloudy"
+                    style="height: 30px"
+                  />
+                  <span id="temperature4"> 30.42 &deg;C</span>
+                </div>
+                <p id="date4">1 May</p>
+                <p id="week4">星期四</p>
+              </div>
+              <div class="forecast-item">
+                <div class="icon-wrapper">
+                  <img
+                    src="/static/img/cloud.png"
+                    alt="cloudy"
+                    style="height: 30px"
+                  />
+                  <span id="temperature5"> 29.42 &deg;C</span>
+                </div>
+                <p id="date5">1 May</p>
+                <p id="week5">星期四</p>
+              </div>
+              <div class="forecast-item">
+                <div class="icon-wrapper">
+                  <img
+                    src="/static/img/cloud.png"
+                    alt="cloudy"
+                    style="height: 30px"
+                  />
+                  <span id="temperature6"> 29.42 &deg;C</span>
+                </div>
+                <p id="date6">1 May</p>
+                <p id="week6">星期四</p>
               </div>
             </div>
           </div>
-          <!-- right section -->
-          <div class="weather-right">
-            <h2>Today's Highlights</h2>
-            <div class="highlights">
-              <!-- 空氣品質 -->
-              <div class="card air-area">
-                <div class="card-head">
-                  <p>Air Quality</p>
-                  <p class="air-index aqi-1">Good</p>
-                </div>
-                <div class="air-indices">
+          <!-- <h2>今日氣象摘要</h2> -->
+          <!-- 空氣品質 -->
+          <div class="card desc-area">
+            <div class="card-head">
+              <p>Description</p>
+            </div>
+            <div class="card-item">
+              <div class="item">
+                <div class="icon">
                   <img
-                    src="/static/img/fire.png"
+                    src="/static/img/eyes.png"
                     alt=""
                     style="height: 100px"
                   />
-                  <div class="item">
-                    <p>PM205</p>
-                    <h2>____</h2>
-                  </div>
-                  <div class="item">
-                    <p>PM205</p>
-                    <h2>____</h2>
-                  </div>
-                  <div class="item">
-                    <p>PM205</p>
-                    <h2>____</h2>
-                  </div>
-                  <div class="item">
-                    <p>PM205</p>
-                    <h2>____</h2>
-                  </div>
-                  <div class="item">
-                    <p>PM205</p>
-                    <h2>____</h2>
-                  </div>
+                </div>
+                <h3 id="description">____</h3>
+              </div>
+            </div>
+          </div>
+          <!-- 日出 & 日落 -->
+          <!-- <div class="card sunrise-sunset-area">
+            <div class="card-head">
+              <p>日出 & 日落</p>
+            </div>
+            <div class="sunrise-sunset card-item">
+              <div class="item">
+                <div class="icon">
+                  <img
+                    src="/static/img/sunrise.png"
+                    alt="sunrise"
+                    style="height: 100px"
+                  />
+                </div>
+                <div>
+                  <p>日出</p>
+                  <h2>____</h2>
                 </div>
               </div>
-              <!-- 日出 & 日落 -->
-              <div class="card sunrise-sunset-area">
-                <div class="card-head">
-                  <p>日出 & 日落</p>
-                  <div class="sunrise-sunset">
-                    <div class="item">
-                      <div class="icon">
-                        <img
-                          src="/static/img/sunrise.png"
-                          alt="sunrise"
-                          style="height: 100px"
-                        />
-                      </div>
-                      <div>
-                        <p>日出</p>
-                        <h2>____</h2>
-                      </div>
-                    </div>
-                    <div class="item">
-                      <div class="icon">
-                        <img
-                          src="/static/img/sunset.png"
-                          alt="sunset"
-                          style="height: 100px"
-                        />
-                      </div>
-                      <div>
-                        <p>日落時間</p>
-                        <h2>____</h2>
-                      </div>
-                    </div>
-                  </div>
+              <div class="item">
+                <div class="icon">
+                  <img
+                    src="/static/img/sunset.png"
+                    alt="sunset"
+                    style="height: 100px"
+                  />
+                </div>
+                <div>
+                  <p>日落時間</p>
+                  <h2>____</h2>
                 </div>
               </div>
-              <!-- 最高溫 & 最低溫 -->
-              <div class="card high-low-area">
-                <div class="card-head">
-                  <p>最高溫度 & 最低溫度</p>
-                  <div class="hightest-lowest-temp">
-                    <!-- 最高溫 -->
-                    <div class="item">
-                      <div class="icon">
-                        <img
-                          src="/static/img/hot.png"
-                          alt="hightest"
-                          style="height: 100px"
-                        />
-                      </div>
-                      <div>
-                        <p>最高溫度</p>
-                        <h2 id="hightest-temp">____&deg;C</h2>
-                      </div>
-                    </div>
-                    <!-- 最低溫 -->
-                    <div class="item">
-                      <div class="icon">
-                        <img
-                          src="/static/img/cold.png"
-                          alt="lowest"
-                          style="height: 100px"
-                        />
-                      </div>
-                      <div>
-                        <p>最低溫度</p>
-                        <h2 id="lowest-temp">____ &deg;C</h2>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- 降雨機率 -->
-              <div class="card rain-area">
-                <div class="card-head">
-                  <p>降雨機率</p>
-                </div>
-                <div class="card-item">
+            </div>
+          </div> -->
+          <!-- 降雨機率 -->
+          <div class="card rain-area">
+            <div class="card-head">
+              <p>相對溼度 & 降雨機率</p>
+            </div>
+            <div class="humidity-probability card-item">
+              <div class="item">
+                <div class="icon">
                   <img
                     src="/static/img/humidity.png"
                     alt="humidity"
                     style="height: 100px"
                   />
+                </div>
+                <div>
+                  <p>相對溼度</p>
                   <h2 id="humidity">____%</h2>
                 </div>
               </div>
-              <!-- 大氣壓力 -->
-              <div class="card pressure-area">
-                <div class="card-head">
-                  <p>大氣壓力</p>
+              <div class="item">
+                <div class="icon">
+                  <img
+                    src="/static/img/umbrella.png"
+                    alt="umbrella"
+                    style="height: 100px"
+                  />
                 </div>
-                <div class="card-item">
+                <div>
+                  <p>降雨機率</p>
+                  <h2 id="probability">____%</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 紫外線指數 -->
+          <div class="card uv-area">
+            <div class="card-head">
+              <p>紫外線指數</p>
+            </div>
+            <div class="card-item">
+              <div class="item">
+                <div class="icon">
                   <img
                     src="/static/img/compass.png"
                     alt="compass"
                     style="height: 100px"
                   />
+                </div>
+                <div>
+                  <p>紫外線指數</p>
                   <h2 id="compass">____hPa</h2>
                 </div>
               </div>
-              <!-- 能見度 -->
-              <div class="card visibility-area">
-                <div class="card-head">
-                  <p>能見度</p>
+            </div>
+          </div>
+          <!-- 最高溫 & 最低溫 -->
+          <div class="card high-low-area">
+            <div class="card-head">
+              <p>最高溫度 & 最低溫度</p>
+            </div>
+            <div class="hightest-lowest-temp card-item">
+              <!-- 最低溫 -->
+              <div class="item">
+                <div class="icon">
+                  <img
+                    src="/static/img/cold.png"
+                    alt="lowest"
+                    style="height: 100px"
+                  />
                 </div>
-                <div class="card-item">
+                <div>
+                  <p>最低溫度</p>
+                  <h2 id="minTemp">____ &deg;C</h2>
+                </div>
+              </div>
+              <!-- 最高溫 -->
+              <div class="item">
+                <div class="icon">
+                  <img
+                    src="/static/img/hot.png"
+                    alt="hightest"
+                    style="height: 100px"
+                  />
+                </div>
+                <div>
+                  <p>最高溫度</p>
+                  <h2 id="maxTemp">____&deg;C</h2>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- 能見度 -->
+          <div class="card visibility-area">
+            <div class="card-head">
+              <p>能見度</p>
+            </div>
+            <div class="card-item">
+              <div class="item">
+                <div class="icon">
                   <img
                     src="/static/img/eyes.png"
                     alt="visibility"
                     style="height: 100px"
                   />
-                  <h2 id="visibility">____km</h2>
                 </div>
+                <div>
+                  <p>能見度</p>
+                  <h2 id="visibility">____km</h2></div>
               </div>
-              <!-- 風速 -->
-              <div class="card wind-area">
-                <div class="card-head">
-                  <p>風速</p>
-                </div>
-                <div class="card-item">
+            </div>
+          </div>
+          <!-- 風速 -->
+          <div class="card wind-area">
+            <div class="card-head">
+              <p>風速 <span id="windSpeed"> ____m/s</span></p>
+            </div>
+            <div class="card-item">
+              <div class="item">
+                <div class="icon">
                   <img
                     src="/static/img/flag.png"
                     alt="wind-speed"
                     style="height: 100px"
                   />
-                  <h2 id="wind-speed">____m/s</h2>
+                </div>
+                <div>
+                  <p>蒲福風級</p>
+                  <span id="beaufortScale"> 4 級<span>和風</span></span>
+                </div>
+                <div>
+                  <p>風向</p>
+                  <span id="windDirec">
+                    東南風<span>SE</span><span> 135°</span>
+                  </span>
                 </div>
               </div>
-              <!-- 體感溫度 -->
-              <div class="card feeling-area">
-                <div class="card-head">
-                  <p>體感溫度</p>
-                </div>
-                <div class="card-item">
-                  <img
-                    src="/static/img/feeling.png"
-                    alt="feels-like"
-                    style="height: 100px"
-                  />
-                  <h2 id="feels-like">____ &deg;C</h2>
-                </div>
+            </div>
+          </div>
+          <!-- 體感溫度 -->
+          <div class="card feeling-area">
+            <div class="card-head">
+              <p>體感溫度</p>
+            </div>
+            <div class="card-item">
+              <div class="item">
+                <img
+                  src="/static/img/feeling.png"
+                  alt="feels-like"
+                  style="height: 100px"
+                />
+                <h2 id="feels-like">____ &deg;C</h2>
               </div>
             </div>
           </div>
@@ -305,4 +337,5 @@
     </main>
     <script src="/static/js/header.js"></script>
   </body>
+  <script src="/static/js/card.js"></script>
 </html>
