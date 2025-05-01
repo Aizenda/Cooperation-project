@@ -12,7 +12,7 @@ def create_webhook(webhook: Webhook_model = Depends(get_webhook_form)):
     return JSONResponse(content=data, status_code=200)
 
 
-@router.put("/webhook_url")
+@router.post("/webhook_url/update")
 def update_webhook(webhook: Webhook_model = Depends(get_webhook_form)):
     data = update_webhook_data(webhook.email,  webhook.webhook_url,
                                webhook.city,  webhook.notify_time)
