@@ -22,9 +22,8 @@ main {
 
 .header__title {
   font-size: 36px;
-  /* font-weight: 700; */
-  color: #858585;
   cursor: pointer;
+  color: #858585;
 }
 
 #forecast,
