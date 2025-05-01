@@ -3,7 +3,7 @@ crearteWebhook.addEventListener("submit", (e) => {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
-  fetch("http://127.0.0.1:8000/api/webhook_url", {
+  fetch("/api/webhook_url", {
     method: "POST",
     body: formData,
   })
@@ -28,7 +28,7 @@ updateWebhook.addEventListener("submit", (e) => {
   e.preventDefault();
   const form = e.target;
   const formData = new FormData(form);
-  fetch("http://127.0.0.1:8000/api/webhook_url/update", {
+  fetch("/api/webhook_url/update", {
     method: "POST",
     body: formData,
   })

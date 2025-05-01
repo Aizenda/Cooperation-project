@@ -7,8 +7,6 @@ router = APIRouter(prefix="/api")
 
 @router.post("/webhook_url")
 def create_webhook(webhook: Webhook_model = Depends(get_webhook_form)):
-    print(webhook.email,  webhook.webhook_url,
-          webhook.city,  webhook.notify_time)
     data = create_webhook_data(webhook.email,  webhook.webhook_url,
                                webhook.city,  webhook.notify_time)
     return JSONResponse(content=data, status_code=200)
