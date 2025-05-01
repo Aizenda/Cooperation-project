@@ -23,11 +23,13 @@ header {
   font-size: 14px;
   color: #999;
 }
-#weather-icon {
-  width: 50px;
+
+.imgSize {
+  width: 30px;
   height: auto;
   max-height: 80px;
   object-fit: contain;
+  margin: 10px;
 }
 .weather-data {
   width: 100%;
