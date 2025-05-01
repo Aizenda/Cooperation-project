@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100..900&display=swap" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" href="static/css/index.css">
+	<link rel="stylesheet" type="text/css" href="static/css/notify.css">
+  <title>notify</title>
+</head>
+<body>
+	<header>
+		<div class="header__title">RickRadar</div>
+		<div class="titlt__nav">
+			<div id="notify">及時推送</div>
+			<div id="forecast">詳細預報 </div>
+			<div id="radar">雷達回波</div>
+		</div>
+	</header>
+  <form>
+    <div><strong>取得即時資訊</strong></div>
+    <div>
+      <label class="required-label">請輸入 email</label>
+      <input type="text" required>
+    </div>
+    <div>
+      <label class="required-label">webhook</label>
+      <input type="text" required>
+    </div>
+    <div class="form-group">
+			<label class="required-label">請選擇城市</label>
+			<select class="city-select" required>
+				<option value="" disabled selected>請選擇</option>
+				<option value="keelung">基隆市</option>
+				<option value="taipei">臺北市</option>
+				<option value="new-taipei">新北市</option>
+				<option value="taoyuan">桃園市</option>
+				<option value="hsinchu-city">新竹市</option>
+				<option value="hsinchu-county">新竹縣</option>
+				<option value="miaoli">苗栗縣</option>
+				<option value="taichung">臺中市</option>
+				<option value="changhua">彰化縣</option>
+				<option value="nantou">南投縣</option>
+				<option value="yunlin">雲林縣</option>
+				<option value="chiayi-city">嘉義市</option>
+				<option value="chiayi-county">嘉義縣</option>
+				<option value="tainan">臺南市</option>
+				<option value="kaohsiung">高雄市</option>
+				<option value="pingtung">屏東縣</option>
+				<option value="taitung">台東縣</option>
+				<option value="hualien">花蓮縣</option>
+				<option value="yilan">宜蘭縣</option>
+				<option value="penghu">澎湖縣</option>
+				<option value="kinmen">金門縣</option>
+				<option value="lienchiang">連江縣</option>
+			</select>
+		</div>
+    <div>
+      <label class="required-label">通知時間</label>
+      <input type="time" id="time" name="time" step="60" required>
+    </div>
+    <button type="submit">獲得通知</button>
+  </form>
+
+  <form>
+    <div><strong>更新獲得通知時間</strong></div>
+    <div>
+      <label class="required-label">請輸入 email</label>
+      <input type="email" required>
+    </div>
+    <div>
+      <label>webhook</label>
+      <input type="text">
+    </div>
+    <div class="form-group">
+			<label class="required-label">請選擇城市</label>
+			<select class="city-select" required>
+				<option value="" disabled selected>請選擇</option>
+				<option value="keelung">基隆市</option>
+				<option value="taipei">臺北市</option>
+				<option value="new-taipei">新北市</option>
+				<option value="taoyuan">桃園市</option>
+				<option value="hsinchu-city">新竹市</option>
+				<option value="hsinchu-county">新竹縣</option>
+				<option value="miaoli">苗栗縣</option>
+				<option value="taichung">臺中市</option>
+				<option value="changhua">彰化縣</option>
+				<option value="nantou">南投縣</option>
+				<option value="yunlin">雲林縣</option>
+				<option value="chiayi-city">嘉義市</option>
+				<option value="chiayi-county">嘉義縣</option>
+				<option value="tainan">臺南市</option>
+				<option value="kaohsiung">高雄市</option>
+				<option value="pingtung">屏東縣</option>
+				<option value="taitung">台東縣</option>
+				<option value="hualien">花蓮縣</option>
+				<option value="yilan">宜蘭縣</option>
+				<option value="penghu">澎湖縣</option>
+				<option value="kinmen">金門縣</option>
+				<option value="lienchiang">連江縣</option>
+			</select>
+		</div>
+    <div>
+      <label class="required-label-2">通知時間</label>
+      <input type="time" id="time" name="time" step="60" required>
+    </div>
+    <button type="submit">獲得更新</button>
+  </form>
+	<script src="static/js/header.js"></script>
+</body>
+</html>
