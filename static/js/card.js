@@ -1,4 +1,4 @@
-const city = "臺北市";
+const city = localStorage.getItem("city");
 
 // 新北市, 基隆市, 台中市, 台南市, 高雄市, 桃園市, 新竹市, 新竹縣, 苗栗縣, 台中縣, 彰化縣, 南投縣, 雲林縣, 嘉義市, 嘉義縣, 屏東縣, 台東縣, 花蓮縣, 宜蘭縣, 澎湖縣, 金門縣, 連江縣";
 const target_element =
@@ -156,71 +156,162 @@ fetch(
       const p = document.createElement("p");
       p.textContent = sentence;
       container.appendChild(p);
-
-      // 風速 & 風向
-      const beaufortScale =
-        data.weather[9].elementValue[0].values.BeaufortScale;
-      const windSpeed = data.weather[9].elementValue[0].values.WindSpeed;
-      const windDirec = data.weather[10].elementValue[0].values.WindDirection;
-      document.getElementById("beaufortScale").textContent = beaufortScale;
-      document.getElementById("windSpeed").textContent = windSpeed;
-      document.getElementById("windDirec").textContent = windDirec;
-      // 體感溫度
-      const maxAppTemp =
-        data.weather[5].elementValue[0].values.MaxApparentTemperature;
-      const minAppTemp =
-        data.weather[6].elementValue[0].values.MinApparentTemperature;
-      document.getElementById(
-        "feels-like"
-      ).textContent = `${minAppTemp} ~ ${maxAppTemp} °C`;
-      // 最高 & 最低 溫度
-      const maxTemp = data.weather[1].elementValue[0].values.MaxTemperature;
-      const minTemp = data.weather[2].elementValue[0].values.MinTemperature;
-      console.log(maxTemp);
-      console.log(minTemp);
-      document.getElementById("maxTemp").textContent = `${maxTemp} °C`;
-      document.getElementById("minTemp").textContent = ` ${minTemp} °C`;
-      // 相對濕度 & 降雨機率
-      const humidity = data.weather[4].elementValue[0].values.RelativeHumidity;
-      const probability =
-        data.weather[11].elementValue[0].values.ProbabilityOfPrecipitation;
-      console.log(humidity);
-      console.log(probability);
-      document.getElementById("humidity").textContent = `${humidity} %`;
-      document.getElementById("probability").textContent = ` ${probability} %`;
-      // 舒適度
-      const comfort
-      = data.weather[7].elementValue[0].values.MaxComfortIndexDescription
-      ;
-      document.getElementById("comfort").textContent = `${comfort}`;
-
-      // 指數值範圍（可能為推估）	中文描述
-      // < 10	非常寒冷
-      // 10 ~ 15	寒冷
-      // 16 ~ 20	涼爽
-      // 21 ~ 25	舒適
-      // 26 ~ 30	微熱
-      // 31 ~ 35	炎熱
-      // > 35	非常炎熱
-
-      // 風向	 縮寫 方位角（度）
-      // 北風	  N	  0° 或 360°
-      // 北北東	NNE	22.5°
-      // 東北風	NE	45°
-      // 東北東	ENE	67.5°
-      // 東風	  E	  90°
-      // 東南東	ESE	112.5°
-      // 東南風	SE	135°
-      // 南南東	SSE	157.5°
-      // 南風	  S	  180°
-      // 南南西	SSW	202.5°
-      // 西南風	SW	225°
-      // 西南西	WSW	247.5°
-      // 西風	  W	  270°
-      // 西北西	WNW	292.5°
-      // 西北風	NW	315°
-      // 北北西	NNW	337.5°
     });
+
+    // === 在這邊加入顯示圖示的邏輯 ===
+    const weatherCard = new WeatherCard();
+    const weatherIconPath = weatherCard.getWeatherIcon(description);
+    console.log("圖片路徑：", weatherIconPath);
+    // 將圖示插入網頁 (你要有一個 <img id="weather-icon"> 的元素)
+    document.getElementById("weather-icon").src = weatherIconPath;
+
+    // 風速 & 風向
+    const windSpeed = data.weather[9].elementValue[0].values.WindSpeed;
+    const windDirec = data.weather[10].elementValue[0].values.WindDirection;
+    document.getElementById("windSpeed").textContent = `${windSpeed} m/s`;
+    document.getElementById("windDirec").textContent = windDirec;
+
+    // 體感溫度
+    const maxAppTemp =
+      data.weather[5].elementValue[0].values.MaxApparentTemperature;
+    const minAppTemp =
+      data.weather[6].elementValue[0].values.MinApparentTemperature;
+    document.getElementById(
+      "feels-like"
+    ).textContent = `${minAppTemp} ~ ${maxAppTemp} °C`;
+
+    // 最高 & 最低 溫度
+    const maxTemp = data.weather[1].elementValue[0].values.MaxTemperature;
+    const minTemp = data.weather[2].elementValue[0].values.MinTemperature;
+    console.log(maxTemp);
+    console.log(minTemp);
+    document.getElementById("maxTemp").textContent = `${maxTemp} °C`;
+    document.getElementById("minTemp").textContent = ` ${minTemp} °C`;
+
+    // 相對濕度 & 降雨機率
+    const humidity = data.weather[4].elementValue[0].values.RelativeHumidity;
+    const probability =
+      data.weather[11].elementValue[0].values.ProbabilityOfPrecipitation;
+    console.log(humidity);
+    console.log(probability);
+    document.getElementById("humidity").textContent = `${humidity} %`;
+    document.getElementById("probability").textContent = ` ${probability} %`;
+
+    // 舒適度
+    const comfort =
+      data.weather[7].elementValue[0].values.MaxComfortIndexDescription;
+    document.getElementById("comfort").textContent = `${comfort}`;
+
+    // 紫外線等級
+    const uv = data.weather[13].elementValue[0].values.UVExposureLevel;
+    console.log(uv);
+    document.getElementById("uv").textContent = uv;
+
+    class WeatherCard {
+      constructor() {
+        this.weatherIconMap = {
+          晴天: "/static/img/天氣對照表/白天/01.svg",
+
+          晴時多雲: "/static/img/天氣對照表/白天/02.svg",
+
+          多雲時晴: "/static/img/天氣對照表/白天/03.svg",
+
+          多雲: "/static/img/天氣對照表/白天/04.svg",
+
+          多雲時陰: "/static/img/天氣對照表/白天/05.svg",
+
+          陰時多雲: "/static/img/天氣對照表/白天/06.svg",
+
+          陰天: "/static/img/天氣對照表/白天/07.svg",
+
+          多雲陣雨: "/static/img/天氣對照表/白天/08.svg",
+          多雲短暫雨: "/static/img/天氣對照表/白天/08.svg",
+          多雲短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+          午後短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+          短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+          多雲時晴短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+          多雲時陰短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+          陰短暫陣雨: "/static/img/天氣對照表/白天/08.svg",
+
+          多雲時晴短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+          多雲短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+          陰短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+          多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+          陰時多雲短暫雷陣雨: "/static/img/天氣對照表/白天/09.svg",
+
+          陰短暫雨: "/static/img/天氣對照表/白天/10.svg",
+          陰午後短暫陣雨: "/static/img/天氣對照表/白天/10.svg",
+          多雲時陰有雨: "/static/img/天氣對照表/白天/10.svg",
+
+          多雲時陰有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
+          陰時多雲有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
+          陰有雷陣雨: "/static/img/天氣對照表/白天/11.svg",
+
+          陰時多雲有雨: "/static/img/天氣對照表/白天/12.svg",
+          陰有雨: "/static/img/天氣對照表/白天/12.svg",
+
+          多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/13.svg",
+          陰短暫雷陣雨: "/static/img/天氣對照表/白天/13.svg",
+
+          多雲時陰短暫雨: "/static/img/天氣對照表/白天/14.svg",
+
+          多雲時陰陣雨: "/static/img/天氣對照表/白天/15.svg",
+          陰陣雨: "/static/img/天氣對照表/白天/15.svg",
+
+          多雲時陰雷陣雨: "/static/img/天氣對照表/白天/16.svg",
+          陰雷陣雨: "/static/img/天氣對照表/白天/16.svg",
+
+          多雲時陰短暫陣雨: "/static/img/天氣對照表/白天/17.svg",
+
+          多雲時陰短暫雷陣雨: "/static/img/天氣對照表/白天/18.svg",
+
+          多雲時陰有霧: "/static/img/天氣對照表/白天/19.svg",
+          陰有霧: "/static/img/天氣對照表/白天/19.svg",
+        };
+      }
+      // 根據天氣描述選擇合適的圖標
+      getWeatherIcon(weatherDescription) {
+        // 從描述中提取天氣現象（去掉溫度、濕度等其他資訊）
+        const weatherPart = weatherDescription.split("。")[0];
+
+        // 檢查是否在映射表中有完全匹配
+        for (const [key, value] of Object.entries(this.weatherIconMap)) {
+          if (weatherPart === key) {
+            return value;
+          }
+        }
+
+        // 如果沒有完全匹配，嘗試部分匹配
+        for (const [key, value] of Object.entries(this.weatherIconMap)) {
+          if (weatherPart.includes(key)) {
+            return value;
+          }
+        }
+
+        // 進一步解析天氣現象的詞組來找到最佳匹配
+        let foundDescription = "";
+        let foundIcon = "";
+
+        // 尋找最長匹配的天氣描述
+        for (const [desc, icon] of Object.entries(this.weatherIconMap)) {
+          // 尋找天氣描述是否包含在文本中
+          if (
+            weatherPart.includes(desc) &&
+            desc.length > foundDescription.length
+          ) {
+            foundDescription = desc;
+            foundIcon = icon;
+          }
+        }
+
+        if (foundIcon) {
+          return foundIcon;
+        }
+
+        // 如果還是沒找到，返回默認圖標
+        return "/static/img/天氣對照表/白天/04.svg"; // 使用多雲作為默認
+      }
+    }
   })
   .catch((err) => {
     console.error("發生錯誤：", err);
