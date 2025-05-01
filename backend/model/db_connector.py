@@ -15,7 +15,7 @@ class MySQLPool:
         try:
             self.pool = pooling.MySQLConnectionPool(
                 pool_name="mypool",
-                pool_size=5,
+                pool_size=10,
                 user=os.getenv("DB_USER"),
                 password=os.getenv("DB_PASSWORD"),
                 host=os.getenv("DB_HOST"),
