@@ -58,9 +58,35 @@
           <option value="連江縣">連江縣</option>
         </select>
       </div>
-      <div>
-        <label class="required-label">通知時間</label>
-        <input type="time" id="time" name="notify_time" step="60" required />
+      <div class="form-group">
+        <label class="required-label">請選擇時間</label>
+        <select class="city-select" name="notify_time" required>
+          <option value="" disabled selected>請選擇</option>
+          <option value="0">00:00</option>
+          <option value="1">01:00</option>
+          <option value="2">02:00</option>
+          <option value="3">03:00</option>
+          <option value="4">04:00</option>
+          <option value="5">05:00</option>
+          <option value="6">06:00</option>
+          <option value="7">07:00</option>
+          <option value="8">08:00</option>
+          <option value="9">09:00</option>
+          <option value="10">10:00</option>
+          <option value="11">11:00</option>
+          <option value="12">12:00</option>
+          <option value="13">13:00</option>
+          <option value="14">14:00</option>
+          <option value="15">15:00</option>
+          <option value="16">16:00</option>
+          <option value="17">17:00</option>
+          <option value="18">18:00</option>
+          <option value="19">19:00</option>
+          <option value="20">20:00</option>
+          <option value="21">21:00</option>
+          <option value="22">22:00</option>
+          <option value="23">23:00</option>
+        </select>
       </div>
       <button type="submit">獲得通知</button>
     </form>
@@ -69,15 +95,15 @@
       <div><strong>更新獲得通知時間</strong></div>
       <div>
         <label class="required-label">請輸入 email</label>
-        <input type="email" name="email" required />
+        <input type="email" name="email"  required/>
       </div>
       <div>
         <label>webhook</label>
         <input type="text" name="webhook_url" />
       </div>
       <div class="form-group">
-        <label class="required-label">請選擇城市</label>
-        <select class="city-select" name="city" required>
+        <label class="required-label_1">請選擇城市</label>
+        <select class="city-select" name="city">
           <option value="" disabled selected>請選擇</option>
           <option value="基隆市">基隆市</option>
           <option value="臺北市">臺北市</option>
@@ -103,9 +129,35 @@
           <option value="連江縣">連江縣</option>
         </select>
       </div>
-      <div>
-        <label class="required-label-2">通知時間</label>
-        <input type="time" id="time" name="notify_time" step="60" required />
+      <div class="form-group">
+        <label class="required-label_1">請選擇時間</label>
+        <select class="city-select" name="notify_time">
+          <option value="" disabled selected>請選擇</option>
+          <option value="0">00:00</option>
+          <option value="1">01:00</option>
+          <option value="2">02:00</option>
+          <option value="3">03:00</option>
+          <option value="4">04:00</option>
+          <option value="5">05:00</option>
+          <option value="6">06:00</option>
+          <option value="7">07:00</option>
+          <option value="8">08:00</option>
+          <option value="9">09:00</option>
+          <option value="10">10:00</option>
+          <option value="11">11:00</option>
+          <option value="12">12:00</option>
+          <option value="13">13:00</option>
+          <option value="14">14:00</option>
+          <option value="15">15:00</option>
+          <option value="16">16:00</option>
+          <option value="17">17:00</option>
+          <option value="18">18:00</option>
+          <option value="19">19:00</option>
+          <option value="20">20:00</option>
+          <option value="21">21:00</option>
+          <option value="22">22:00</option>
+          <option value="23">23:00</option>
+        </select>
       </div>
       <button type="submit">獲得更新</button>
     </form>
