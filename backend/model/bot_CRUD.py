@@ -61,12 +61,13 @@ def update_webhook_data(email, webhook_url: str = None, city: str = None, notify
             con.close()
 
 
-def get_all_webhook_data():
+def get_all_webhook_data(hour):
     try:
         con = mysql_pool.get_connection()
         cursor = con.cursor(dictionary=True)
-        query = "SELECT city, webhook_url, notify_time, last_update FROM webhook"
-        cursor.execute(query)
+        query = "SELECT city, webhook_url FROM webhook WHERE notify_time=%s"
+        param = hour
+        cursor.execute(query, (param,))
         all_data = cursor.fetchall()
         return all_data
     except Exception as e:
