@@ -1,32 +1,27 @@
+
 from backend.model.bot_day import Bot_daily
 from backend.model.bot_CRUD import get_all_webhook_data
-import schedule
-import time
-from datetime import date, datetime
-
+from datetime import date, datetime, timedelta
 
 def job():
     try:
-        today = date.today()
-        current_hour = datetime.now().strftime("%H:%M")
-        all_data = get_all_webhook_data()
-        print("job被呼叫")
+        # 取得時間(UTC+8)
+        current_hour = datetime.now() + timedelta(hours=8)
+        # 格式化為小時字串 (例如 "08")
+        current_hour = current_hour.strftime("%H")
+        
+        all_data = get_all_webhook_data(current_hour)
+        print(f"job被呼叫 - 現在時間: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (UTC+8時間: {(datetime.now() + timedelta(hours=8)).strftime('%Y-%m-%d %H:%M:%S')})")
+        print(f"檢查 {current_hour} 點的通知")
+        
         for data in all_data:
             city = data.get("city")
             url = data.get("webhook_url")
-            notify_time = data.get("notify_time")
-            last_update = data.get("last_update")
-
-            if notify_time == current_hour and today >= last_update:
-                Bot = Bot_daily(url)
-                Bot.get_current_weather_data(city)
+            Bot = Bot_daily(url)
+            Bot.get_current_weather_data(city)
+            print(f"已發送 {city} 的天氣通知")
     except Exception as e:
-        print(e)
+        print(f"執行過程中發生錯誤: {e}")
 
-
-schedule.every(1).minutes.do(job)
 if __name__ == "__main__":
-    while True:
-        schedule.run_pending()
-        time.sleep(10)
-        print("10s")
+    job()

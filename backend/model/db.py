@@ -24,8 +24,7 @@ def create_database():
                 email VARCHAR(255) NOT NULL,
                 webhook_url TEXT NOT NULL,
                 city VARCHAR(255) NOT NULL,
-                notify_time TEXT NOT NULL,
-                last_update DATE NOT NULL
+                notify_time INT NOT NULL
             );
         """
         cursor.execute(create_table_query)

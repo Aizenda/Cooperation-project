@@ -18,9 +18,9 @@ def create_webhook_data(email, webhook_url: str, city: str, notify_time: str):
         user_email = search_user_with_email(email, cursor)
         if user_email:
             return {"error": True, "message": "此信箱已被註冊"}
-        query = "INSERT INTO webhook (email, webhook_url, city, notify_time, last_update)" \
-            "VALUES(%s, %s, %s, %s, %s)"
-        params = (email, webhook_url, city, notify_time, today)
+        query = "INSERT INTO webhook (email, webhook_url, city, notify_time)" \
+            "VALUES(%s, %s, %s, %s)"
+        params = (email, webhook_url, city, notify_time)
         cursor.execute(query, params)
         con.commit()
         return {"ok": True}
@@ -61,12 +61,13 @@ def update_webhook_data(email, webhook_url: str = None, city: str = None, notify
             con.close()
 
 
-def get_all_webhook_data():
+def get_all_webhook_data(hour):
     try:
         con = mysql_pool.get_connection()
         cursor = con.cursor(dictionary=True)
-        query = "SELECT city, webhook_url, notify_time, last_update FROM webhook"
-        cursor.execute(query)
+        query = "SELECT city, webhook_url FROM webhook WHERE notify_time=%s"
+        param = hour
+        cursor.execute(query, (param,))
         all_data = cursor.fetchall()
         return all_data
     except Exception as e:

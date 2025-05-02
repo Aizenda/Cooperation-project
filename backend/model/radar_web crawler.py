@@ -1,32 +1,31 @@
-import time
 import requests
 import db_connector
 from datetime import datetime, timedelta
 
 def fetch_radar_data():
     radar_url = 'https://opendata.cwa.gov.tw/fileapi/v1/opendataapi/O-A0058-003?Authorization=rdec-key-123-45678-011121314&format=JSON'
-
+    
     try:
         radar = requests.get(radar_url, timeout=10)
         radar_json = radar.json()
         latest_dt = datetime.fromisoformat(radar_json['cwaopendata']['dataset']['DateTime'])
         print(f"最新雷達圖時間: {latest_dt.isoformat()}")
-
+        
         con = db_connector.mysql_pool.get_connection()
         cursor = con.cursor()
-
+        
         delete_old_data(cursor, con)
-
+        
         cursor.execute("SELECT COUNT(*) FROM radar_data")
         row_count = cursor.fetchone()[0]
-
+        
         if row_count == 0:
             print("資料表為空，補抓過去兩天資料")
             fetch_two_days_radar_data(cursor, con, latest_dt)
         else:
             print("資料表已有資料，只抓最新一筆")
             fetch_latest_radar_data(cursor, con, latest_dt)
-
+    
     except Exception as e:
         print(f"獲取雷達圖數據時發生錯誤: {e}")
     finally:
@@ -48,6 +47,7 @@ def fetch_two_days_radar_data(cursor, con, latest_dt):
 
 def fetch_latest_radar_data(cursor, con, dt):
     insert_radar_image(cursor, con, dt)
+    print(dt)
 
 def insert_radar_image(cursor, con, dt):
     formatted_time = dt.strftime("%Y%m%d%H%M")
@@ -81,8 +81,5 @@ def delete_old_data(cursor, con):
             con.rollback()
 
 if __name__ == "__main__":
-    while True:
-        print(f"\n🚀 開始: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
-        fetch_radar_data()
-        print("⏳ 等待 10 分鐘...\n")
-        time.sleep(600)
+    print(f"\n🚀 開始: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    fetch_radar_data()
