@@ -251,7 +251,7 @@ class CardView {
     const allData = data.weather[0].elementValue;
 
     // 渲染當前天氣 - 使用第二筆資料作為當前天氣
-    const current = allData[2]; // 從第二筆資料開始
+    const current = allData[0]; // 從第二筆資料開始
 
     if (current) {
       this.element.currentPeriod.textContent = current.period || "Now";

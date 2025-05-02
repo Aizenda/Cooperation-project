@@ -47,6 +47,7 @@ def fetch_two_days_radar_data(cursor, con, latest_dt):
 
 def fetch_latest_radar_data(cursor, con, dt):
     insert_radar_image(cursor, con, dt)
+    print(dt)
 
 def insert_radar_image(cursor, con, dt):
     formatted_time = dt.strftime("%Y%m%d%H%M")
