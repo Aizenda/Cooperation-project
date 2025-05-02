@@ -27,10 +27,10 @@
   → 解決方法：每天開會、熬夜處理...( 累  
 
 ## ✅ 資料來源  
-- [中央氣象局API](https://opendata.cwb.gov.tw/dist/opendata-swagger.html#/%E9%A0%90%E5%A0%B1/get_v1_rest_datastore_F-C0032-001)
+- [中央氣象局API](https://opendata.cwa.gov.tw/dist/opendata-swagger.html#/%E9%A0%90%E5%A0%B1/get_v1_rest_datastore_F_D0047_091)
 - [天氣圖示對照表](https://www.cwa.gov.tw/V8/C/K/Weather_Icon.html)
 - [ICON 圖片來源](https://www.flaticon.com/packs/weather-161)
-- [中央氣象局雷達回波](https://www.cwa.gov.tw/V8/C/K/Weather_Icon.html)
+- [中央氣象局雷達回波](https://www.cwa.gov.tw/V8/C/W/OBS_Radar.html)
 - [絕命六龜葡萄](https://www.youtube.com/watch?v=72ap5hdI4fs&ab_channel=%E9%A6%99%E6%B8%AF%E4%BA%A4%E5%8F%8B%E8%A8%8E%E8%AB%96%E5%8D%80hkeasychat.com)
 
 
