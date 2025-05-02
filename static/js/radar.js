@@ -1,5 +1,3 @@
-// 在 static/js/radar.js 中添加以下代碼
-
 document.addEventListener('DOMContentLoaded', function() {
   // 獲取雷達圖元素
   const radarImg = document.querySelector('.radar__img');
